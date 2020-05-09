@@ -82,8 +82,8 @@ set guioptions-=T  "toolbar
 set guioptions-=r  "scrollbar
 "set guifont=Inconsolata\ for\ Powerline\ Medium\ 12
 set expandtab
-set softtabstop=3
-set shiftwidth=3
+set softtabstop=2
+set shiftwidth=2
 set laststatus=2
 set number
 syntax on

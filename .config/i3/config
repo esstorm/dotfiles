@@ -1,0 +1,289 @@
+set $mod Mod4
+
+gaps outer 5
+gaps inner 10
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+#font pango:Noto Sans 12
+# font pango:'Fura Code Regular Nerd Font Complete Mono' 10
+#font pango:Droid Sans 10
+font -*-dina-medium-r-*-*-8-*-*-*-*-*-*-*
+
+# start polybar
+exec_always --no-startup-id ~/.config/polybar/launch.sh &
+
+exec_always --no-startup-id feh --bg-center ~/.config/i3/wallpapers/budgie.jpg &
+exec_always --no-startup-id setxkbmap -option 'grp:alt_shift_toggle' -layout us,latam
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+#bindsym $mod+turn exec st
+
+# kill focused window
+bindsym $mod+q kill
+
+# start rofi (a program launcher)
+bindsym $mod+d exec --no-startup-id "rofi -combi-modi drun,run -show combi"
+bindsym $mod+Shift+d exec --no-startup-id rofi -show window
+bindsym Mod1+Tab exec --no-startup-id rofi -show window
+
+# change focus
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+bindsym $mod+z focus child
+
+set $binfolder "~/.i3/bin"
+
+set $ws1  "1:"
+set $ws2  "2:"
+set $ws3  "3:"
+set $ws4  "4:"
+set $ws5  "5:"
+set $ws6  "6:"
+set $ws7  "7:"
+set $ws8  "8:"
+set $ws9  "9:"
+set $ws10 "10: "
+set $ws11 "*:"
+
+# bind workspaces to monitors
+workspace $ws1  output primary
+workspace $ws2  output primary
+workspace $ws3  output primary
+workspace $ws4  output primary
+workspace $ws5  output primary
+workspace $ws6  output secondary
+workspace $ws7  output secondary
+workspace $ws8  output secondary
+workspace $ws9  output secondary
+workspace $ws10 output secondary
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+bindsym $mod+m workspace $ws11
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+bindsym $mod+Shift+m move container to workspace $ws11
+
+force_display_urgency_hint 0 ms
+focus_on_window_activation urgent
+
+# Set workspace name
+bindsym $mod+t exec i3-input -F 'rename workspace to %s' -P 'New name: '
+
+# Music control
+# Special music mode
+set $music Music (n) next, (b) prev, (p) play/pause
+mode "$music" {
+  bindsym n exec --no-startup-id cmus-remote --next && pkill --signal SIGRTMIN+13 i3blocks, mode "default"
+  bindsym b exec --no-startup-id cmus-remote --prev && pkill --signal SIGRTMIN+13 i3blocks, mode "default"
+  bindsym p exec --no-startup-id cmus-remote --pause && pkill --signal SIGRTMIN+13 i3blocks, mode "default"
+
+# back to normal
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+# These bindings trigger as soon as you enter the resize mode
+  # Pressing left will shrink the window’s width.
+  # Pressing right will grow the window’s width.
+  # Pressing up will shrink the window’s height.
+  # Pressing down will grow the window’s height.
+  bindsym j resize shrink width 10 px or 10 ppt
+  bindsym k resize grow height 10 px or 10 ppt
+  bindsym l resize shrink height 10 px or 10 ppt
+  bindsym semicolon resize grow width 10 px or 10 ppt
+
+  # same bindings, but for the arrow keys
+  bindsym Left resize shrink width 10 px or 10 ppt
+  bindsym Down resize grow height 10 px or 10 ppt
+  bindsym Up resize shrink height 10 px or 10 ppt
+  bindsym Right resize grow width 10 px or 10 ppt
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Brightness
+bindsym XF86MonBrightnessUp exec xbacklight + 10
+bindsym XF86MonBrightnessDown exec xbacklight - 10
+# Pulse Audio controls
+#increase sound volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id /bin/bash "/home/ezalees/.i3/bin/volume.sh" up
+#decrease sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id /bin/bash "/home/ezalees/.i3/bin/volume.sh" down
+# mute sound
+bindsym XF86AudioMute exec --no-startup-id /bin/bash "/home/ezalees/.i3/bin/volume.sh" mute
+# Next Song
+bindsym XF86AudioNext exec --no-startup-id cmus-remote --next && pkill --signal SIGRTMIN+13 i3blocks
+# Prev Song
+bindsym XF86AudioPrev exec --no-startup-id cmus-remote --prev && pkill --signal SIGRTMIN+13 i3blocks
+# Play Pause
+bindsym XF86AudioPlay exec --no-startup-id cmus-remote --pause && pkill --signal SIGRTMIN+13 i3blocks
+# Screenshot
+bindsym Print exec teiler
+# switch workspace
+bindsym $mod+comma workspace prev
+bindsym $mod+period workspace next
+
+# Special system mode
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate
+mode "$mode_system" {
+  #bindsym l exec --no-startup-id light-locker-command -l, mode "default"
+  bindsym l exec --no-startup-id i3lock -c 000000, mode "default"
+  bindsym e exec --no-startup-id i3-msg exit, mode "default"
+  bindsym s exec --no-startup-id systemctl suspend, mode "default"
+  bindsym h exec --no-startup-id systemctl hibernate, mode "default"
+# back to normal
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+bindsym $mod+Alt_R mode "$mode_system"
+
+# Set background
+exec_always --no-startup-id nitrogen --restore
+# Capslock is control
+exec --no-startup-id xmodmap ~/.Xmodmap
+# run special warning script
+exec --no-startup-id ~/.i3/bin/i3nag.sh
+# Wallpaper Script
+#exec --no-startup-id ~/.i3/bin/wallpaper.sh
+# Network Applet
+exec --no-startup-id nm-applet
+# Redshift Applet
+exec --no-startup-id systemctl --user start redshift-gtk
+
+# Emergency start cmus
+#bindsym $mod+Shift+Tab exec screen -S cmus -d -m cmus && pkill --signal SIGRTMIN+13 i3blocks
+bindsym $mod+Tab mode "$music"
+
+# Compositing Manager
+exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
+# Tiling Window Manager Notification Daemon
+exec --no-startup-id twmnd
+
+# Move workspaces between output
+bindsym $mod+y move workspace to output left
+
+# Colors
+client.focused          #c6ff00 #c6ff00 #000000 #dddddd
+client.focused_inactive #333333 #333333 #c6ff00 #ffffff
+client.unfocused        #333333 #333333 #888888 #292d2e
+client.urgent           #2f343a #900000 #ffffff #900000
+
+assign [class=".*(F|f)irefox.*"] $ws1
+assign [class=".*EZALEES-CSCF-SLES12-LVDI.*"] $ws5
+assign [class="Evolution"] $ws7
+assign [class=".*Microsoft Teams"] $ws9
+assign [class="Spotify"] $ws11
+for_window [class="Spotify"] move to workspace $ws11
+
+assign [class="pidgin"] $ws0
+for_window [class="pidgin"] move to workspace $ws0
+
+# windows starting in floating mode
+for_window [class="^.*"] border pixel 2
+for_window [class="^Floatme$"] floating enable
+for_window [instance="origin.exe"] floating enable
+for_window [title="File Transfer*"] floating enable
+for_window [class="Lightdm-gtk-greeter-settings"] floating enable
+for_window [class="Lxappearance"] floating enable
+for_window [class="Nitrogen"] floating enable
+for_window [class="Galculator"] floating enable
+for_window [class="Nautilus"] floating enable
+for_window [class="Org.gnome.Weather.Application"] floating enable
+for_window [class="(?i)virtualbox"] floating enable
+for_window [title="alsamixer"] floating enable border pixel 1
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Nm-connection-editor"] floating enable
+for_window [class="Blueman-manager"] floating enable
+for_window [class="pidgin"] floating enable
+for_window [class="Tomboy"] floating enable
+for_window [title="Microsoft Teams Notification"] floating enable
+
+#smart_gaps on
+smart_borders no_gaps
+
+# Startup
+#exec --no-startup-id i3-msg 'workspace 2: ; exec st'
+
