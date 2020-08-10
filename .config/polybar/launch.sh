@@ -10,7 +10,7 @@ killall -q polybar
    #sleep 1;
 #done
 
-polybar -l trace --reload secondary -c ~/.config/polybar/config.ini
+polybar --reload secondary -c ~/.config/polybar/config.ini
 
 # The main bar includes extra modules to see the time, weather, etc
 # for m in $(polybar --list-monitors | grep "primary" | cut -d":" -f1); do

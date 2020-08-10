@@ -1,7 +1,9 @@
 set $mod Mod4
 
-gaps outer 5
+gaps outer 3
 gaps inner 10
+
+smart_borders no_gaps
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -10,12 +12,13 @@ gaps inner 10
 #font pango:Noto Sans 12
 # font pango:'Fura Code Regular Nerd Font Complete Mono' 10
 #font pango:Droid Sans 10
-font -*-dina-medium-r-*-*-8-*-*-*-*-*-*-*
+# font -*-dina-medium-r-*-*-8-*-*-*-*-*-*-*
+font pango:Iosevka 12
 
 # start polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh &
 
-exec_always --no-startup-id feh --bg-center ~/.config/i3/wallpapers/budgie.jpg &
+exec_always --no-startup-id feh --bg-center ~/Pictures/plane_wallpaper.jpg &
 exec_always --no-startup-id setxkbmap -option 'grp:alt_shift_toggle' -layout us,latam
 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -87,7 +90,8 @@ set $binfolder "~/.i3/bin"
 
 set $ws1  "1:"
 set $ws2  "2:"
-set $ws3  "3:"
+# set $ws3  "3:"
+set $ws3  "3:"
 set $ws4  "4:"
 set $ws5  "5:"
 set $ws6  "6:"
@@ -161,6 +165,7 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
 # These bindings trigger as soon as you enter the resize mode
@@ -201,7 +206,8 @@ bindsym XF86AudioPrev exec --no-startup-id cmus-remote --prev && pkill --signal 
 # Play Pause
 bindsym XF86AudioPlay exec --no-startup-id cmus-remote --pause && pkill --signal SIGRTMIN+13 i3blocks
 # Screenshot
-bindsym Print exec teiler
+bindsym Print exec scrot
+bindsym $mod+Print exec scrot -s
 # switch workspace
 bindsym $mod+comma workspace prev
 bindsym $mod+period workspace next
@@ -221,9 +227,9 @@ mode "$mode_system" {
 bindsym $mod+Alt_R mode "$mode_system"
 
 # Set background
-exec_always --no-startup-id nitrogen --restore
+exec_al --no-startup-id nitrogen --restore
 # Capslock is control
-exec --no-startup-id xmodmap ~/.Xmodmap
+# exec --no-startup-id xmodmap ~/.Xmodmap
 # run special warning script
 exec --no-startup-id ~/.i3/bin/i3nag.sh
 # Wallpaper Script
@@ -246,23 +252,25 @@ exec --no-startup-id twmnd
 bindsym $mod+y move workspace to output left
 
 # Colors
-client.focused          #c6ff00 #c6ff00 #000000 #dddddd
+# client.focused          #282a36 #282a36 #f8f8f2 #000000
+client.focused          #794b87 #794b87 #000000 #dddddd
 client.focused_inactive #333333 #333333 #c6ff00 #ffffff
-client.unfocused        #333333 #333333 #888888 #292d2e
+client.unfocused        #15161c #15161c #6272a4 #292d2e
 client.urgent           #2f343a #900000 #ffffff #900000
 
 assign [class=".*(F|f)irefox.*"] $ws1
-assign [class=".*EZALEES-CSCF-SLES12-LVDI.*"] $ws5
+assign [class="Wfica"] $ws5
 assign [class="Evolution"] $ws7
 assign [class=".*Microsoft Teams"] $ws9
 assign [class="Spotify"] $ws11
 for_window [class="Spotify"] move to workspace $ws11
+for_window [title="Mail -.*- Outlook"] $ws7
 
 assign [class="pidgin"] $ws0
 for_window [class="pidgin"] move to workspace $ws0
 
 # windows starting in floating mode
-for_window [class="^.*"] border pixel 2
+for_window [class="^.*"] border pixel 0
 for_window [class="^Floatme$"] floating enable
 for_window [instance="origin.exe"] floating enable
 for_window [title="File Transfer*"] floating enable
@@ -280,10 +288,10 @@ for_window [class="Blueman-manager"] floating enable
 for_window [class="pidgin"] floating enable
 for_window [class="Tomboy"] floating enable
 for_window [title="Microsoft Teams Notification"] floating enable
-
-#smart_gaps on
-smart_borders no_gaps
+for_window [class="Yad" title="yad-calendar"] floating enable
 
 # Startup
-#exec --no-startup-id i3-msg 'workspace 2: ; exec st'
-
+exec --no-startup-id emacs --daemon
+exec --no-startup-id firefox
+exec --no-startup-id teams
+exec --no-startup-id spotify

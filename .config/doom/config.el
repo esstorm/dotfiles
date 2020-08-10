@@ -5,7 +5,8 @@
 (setq
       ;; doom-scratch-initial-major-mode 'lisp-interaction-mode
       doom-theme 'doom-dracula
-      treemacs-width 22
+      ;; treemacs-width 22
+
 
       ;; Line numbers are pretty slow all around. The performance boost of
       ;; disabling them outweighs the utility of always keeping them on.
@@ -28,7 +29,6 @@
 ;; "monospace" means use the system default. However, the default is usually two
 ;; points larger than I'd like, so I specify size 12 here.
 (setq doom-font (font-spec :family "SF Mono" :size 18 :weight 'semi-light))
-      ;; doom-variable-pitch-font (font-spec :family "SF " :size 18))
 
 ;; Prevents some cases of Emacs flickering
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
@@ -53,7 +53,9 @@
       :leader
       "h L" #'global-keycast-mode
       "f t" #'find-in-dotfiles
-      "f T" #'browse-dotfiles)
+      "f T" #'browse-dotfiles
+      "f n" #'find-in-orgnotes
+      "f N" #'browse-orgnotes)
 
 
 ;;
@@ -72,6 +74,10 @@
 ;; Silence all that useless output
 (setq direnv-always-show-summary nil)
 
+;; Set plantuml path
+(setq plantuml-jar-path "~/bin/plantuml.jar")
+(setq org-plantuml-jar-path "~/bin/plantuml.jar")
+
 ;;; :tools magit
 ;(setq magit-repository-directories '(("~/projects" . 2))
       ;magit-save-repository-buffers nil
@@ -87,8 +93,25 @@
       ;org-roam-directory (concat org-directory "notes/")
       org-journal-encrypt-journal t
       org-ellipsis " ▼ ")
+
+;;;
+(setq projectile-project-search-path '("/repo/ezalees/vsbg"))
+
 (after! org
   (add-to-list 'org-modules 'org-habit t))
+
+(setq org-publish-project-alist
+  '(("html"
+     :base-directory "~/notes/org/"
+     :base-extension "org"
+     :publishing-directory "~/notes/org/exports"
+     :publishing-function org-publish-org-to-html)
+    ("pdf"
+     :base-directory "~/notes/org/"
+     :base-extension "org"
+     :publishing-directory "~/notes/org/exports"
+     :publishing-function org-publish-org-to-pdf)
+    ("all" :components ("html" "pdf"))))
 
 ;;; :ui doom-dashboard
 (setq fancy-splash-image (concat doom-private-dir "splash.png"))

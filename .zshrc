@@ -3,21 +3,25 @@
 
 # Path to your oh-my-zsh installation.
 export ZSH="${HOME}"/.oh-my-zsh
+
 export PATH="${HOME}"/bin:"${PATH}"
 export PATH="${PATH}":"${HOME}"/apps/CodeChecker/bin
 export PATH="${PATH}:${HOME}/.krew/bin"
 export PATH="${PATH}":"${HOME}"/.emacs.d/bin/
+export PATH="${PATH}":"${HOME}"/go/bin
 #export PATH="${HOME}"/.cargo/bin:"${PATH}"
 
 ZSH_THEME="spaceship"
 
 . ~/.aliases
+. ~/.kubectl-aliases
 
 # Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="true"
-plugins=(git)
+plugins=(git globalias)
 
 source $ZSH/oh-my-zsh.sh
+export KUBECONFIG=/home/ezalees/.kube/hoff073:/home/ezalees/.kube/todd046:/home/ezalees/.kube/minikube
 
 cl() {
    GREP_COLOR='01;36' grep --color=always 'APP-TRACE' $1 |\
@@ -32,14 +36,19 @@ cl() {
    less -S -R
 }
 
-unzip_d () {
+unzip_d() {
    zipfile="$1"
    zipdir=${1%.zip}
    unzip -d "$zipdir" "$zipfile"
 }
+
+pp() {
+   jq -C . $1 | less -R
+}
+
 export LANG=en_US.UTF-8
 
-EDITOR='vim'
+EDITOR='emacs'
 alias hs='history | grep '
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
