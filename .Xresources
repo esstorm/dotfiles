@@ -78,6 +78,11 @@ st.chscale:       1.0
 st.cwscale:       1.0
 
 !--------------------------------------------
+! Cursor size
+
+Xcursor.size: 32
+
+!--------------------------------------------
 ! General Colors
 
 #include ".colors/color"

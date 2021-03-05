@@ -15,7 +15,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'OmniCppComplete'
 Plugin 'ctags.vim'
 Plugin 'surround.vim'
-Plugin 'molokai'
+"Plugin 'molokai'
+Plugin 'dracula/vim', { 'name': 'dracula' }
 Plugin 'The-NERD-Commenter'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'bronson/vim-trailing-whitespace'
@@ -71,8 +72,9 @@ set ttimeoutlen=50                            " to prevent delay when
 "let g:rehash256=1
 
 "" " Colorscheme
-let g:molokai_original=1
-colorscheme molokai
+"let g:molokai_original=1
+"colorscheme molokai
+colorscheme dracula
 
 let g:NERDTreeHijackNetrw=0
 let g:session_autoload = 'no'

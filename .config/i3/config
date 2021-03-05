@@ -3,6 +3,8 @@ set $mod Mod4
 gaps outer 3
 gaps inner 10
 
+# gaps top 35
+
 smart_borders no_gaps
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -18,15 +20,14 @@ font pango:Iosevka 12
 # start polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh &
 
-exec_always --no-startup-id feh --bg-center ~/Pictures/plane_wallpaper.jpg &
-exec_always --no-startup-id setxkbmap -option 'grp:alt_shift_toggle' -layout us,latam
+exec_always --no-startup-id feh --bg-center ~/Pictures/wallpapers/astronaut-jellyfish-wallpaper.jpg &
+exec_always --no-startup-id setxkbmap -layout us -variant altgr-intl
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
-#bindsym $mod+turn exec st
 
 # kill focused window
 bindsym $mod+q kill
@@ -34,7 +35,7 @@ bindsym $mod+q kill
 # start rofi (a program launcher)
 bindsym $mod+d exec --no-startup-id "rofi -combi-modi drun,run -show combi"
 bindsym $mod+Shift+d exec --no-startup-id rofi -show window
-bindsym Mod1+Tab exec --no-startup-id rofi -show window
+# bindsym Mod1+Tab exec --no-startup-id rofi -show window
 
 # change focus
 bindsym $mod+j focus left
@@ -90,7 +91,6 @@ set $binfolder "~/.i3/bin"
 
 set $ws1  "1:"
 set $ws2  "2:"
-# set $ws3  "3:"
 set $ws3  "3:"
 set $ws4  "4:"
 set $ws5  "5:"
@@ -162,6 +162,7 @@ mode "$music" {
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
+bindsym $mod+Shift+o exec "xrandr --output eDP-1 --auto --primary"
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
@@ -207,7 +208,7 @@ bindsym XF86AudioPrev exec --no-startup-id cmus-remote --prev && pkill --signal 
 bindsym XF86AudioPlay exec --no-startup-id cmus-remote --pause && pkill --signal SIGRTMIN+13 i3blocks
 # Screenshot
 bindsym Print exec scrot
-bindsym $mod+Print exec scrot -s
+bindsym --release $mod+Print exec scrot -s
 # switch workspace
 bindsym $mod+comma workspace prev
 bindsym $mod+period workspace next
@@ -244,7 +245,7 @@ exec --no-startup-id systemctl --user start redshift-gtk
 bindsym $mod+Tab mode "$music"
 
 # Compositing Manager
-exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
+exec --no-startup-id picom -b --experimental-backends --config ~/.config/picom/picom.conf
 # Tiling Window Manager Notification Daemon
 exec --no-startup-id twmnd
 
@@ -289,9 +290,16 @@ for_window [class="pidgin"] floating enable
 for_window [class="Tomboy"] floating enable
 for_window [title="Microsoft Teams Notification"] floating enable
 for_window [class="Yad" title="yad-calendar"] floating enable
+for_window [title="Qalculate!"] floating enable
+
+# Simulate a menubar applet
+for_window [class="PulseUi" title="Pulse Secure"] floating enable
+for_window [class="PulseUi" title="Pulse Secure"]  move absolute position 1300 px 36 px
+
+
 
 # Startup
-exec --no-startup-id emacs --daemon
 exec --no-startup-id firefox
 exec --no-startup-id teams
 exec --no-startup-id spotify
+exec --no-startup-id ~/bin/auto_monitor.sh
