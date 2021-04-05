@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#
+# This script uses Rofi to create a dialog to switch
+# keyboard layouts via setxkbmap
+
+case "$1" in
+--switch)
+    ~/bin/rofi/kb-layout
+    ;;
+*)
+    setxkbmap -query | awk '/layout/ { print $2}'
+    ;;
+esac

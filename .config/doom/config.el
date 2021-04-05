@@ -1,7 +1,7 @@
 ;;; ~/.config/doom/config.el -*- lexical-binding: t; -*-
 
 (setq
-      ;; doom-scratch-initial-major-mode 'lisp-interaction-mode
+      doom-scratch-initial-major-mode 'lisp-interaction-mode
       doom-theme 'doom-dracula
 
       ;; lsp-ui-sideline is redundant with eldoc and much more invasive, so
@@ -9,6 +9,35 @@
       lsp-ui-sideline-enable nil
       lsp-enable-symbol-highlighting nil)
 
+;; Easier to match with a bspwm rule:
+;;   bspc rule -a 'Emacs:emacs-everywhere' state=floating sticky=on
+(setq emacs-everywhere-frame-name-format "emacs-anywhere")
+
+;; The modeline is not useful to me in the popup window. It looks much nicer
+;; to hide it.
+(add-hook 'emacs-everywhere-init-hooks #'hide-mode-line-mode)
+
+;; Semi-center it over the target window, rather than at the cursor position
+;; (which could be anywhere).
+(defadvice! my-emacs-everywhere-set-frame-position (&rest _)
+  :override #'emacs-everywhere-set-frame-position
+  (cl-destructuring-bind (width . height)
+      (alist-get 'outer-size (frame-geometry))
+    (set-frame-position (selected-frame)
+                        (+ emacs-everywhere-window-x
+                           (/ emacs-everywhere-window-width 2)
+                           (- (/ width 2)))
+                        (+ emacs-everywhere-window-y
+                           (/ emacs-everywhere-window-height 2)))))
+
+(when (daemonp)
+  (require 'spell-fu)
+  (setq emacs-everywhere-major-mode-function #'org-mode
+        emacs-everywhere-frame-name-format "Edit âˆ· %s â€” %s")
+  (require 'emacs-everywhere))
+
+;; Set case insensitive search by default
+(setq case-fold-search t)
 ;;
 ;;; UI
 
@@ -60,6 +89,9 @@
 ;; Set plantuml path
 (setq plantuml-jar-path "~/bin/plantuml.jar")
 (setq org-plantuml-jar-path "~/bin/plantuml.jar")
+
+;; Set ob-tmux default terminal
+(setq org-babel-tmux-terminal "alacritty")
 
 ;;; :tools magit
 ;(setq magit-repository-directories '(("~/projects" . 2))
@@ -131,6 +163,7 @@
 
 ;;; :ui doom-dashboard
 (setq fancy-splash-image (concat doom-private-dir "splash.png"))
+;; (setq fancy-splash-image (concat doom-private-dir "robot.png"))
 
 ;;; :ui modeline
 ;; (custom-set-faces!

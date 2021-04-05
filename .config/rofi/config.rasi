@@ -1,6 +1,6 @@
 /* -*- mode: css; -*- */
 configuration {
-  /*icon-theme:       "Tela-blue";*/
+  icon-theme:       "Tela-blue";
   cycle:            true;
   disable-history:  false;
   monitor:          "-4";
@@ -29,7 +29,8 @@ configuration {
 
   text-font:      "Fira Sans 15";
   text-mono-font: "Fira Code 13";
-  icon-font:      "Hurmit Nerd Font Mono 26";
+  /*icon-font:      "Hurmit Nerd Font Mono 26";*/
+  icon-font:      "Fira Code 26";
 
   background-color: transparent;
   text-color: @fg-list;

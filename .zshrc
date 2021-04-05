@@ -72,8 +72,9 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 ALT_EDITOR=""
 e () {
+   #pgrep emacs && emacsclient -n "$@" || emacs -nw "$@"
    # Reuse existing frames (don't create a new window)
-   # emacsclient -n $@ &>/dev/null &
+   #emacsclient -n $@ &>/dev/null &
    emacsclient --create-frame $@ &>/dev/null &
 }
 
@@ -84,3 +85,4 @@ complete -F __start_kubectl k
 source <(helm completion zsh)
 
 _starttmux
+fpath+=${ZDOTDIR:-~}/.zsh_functions

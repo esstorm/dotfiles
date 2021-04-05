@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+
+rofi_command="rofi -theme ~/.config/rofi/powermenu.rasi"
+
+### Options ###
+english="English - International"
+spanish="Spanish"
+hungarian="Hungarian"
+# Variable passed to rofi
+options="$english\n$spanish\n$hungarian"
+
+case "$(echo -e "$options" | $rofi_command -dmenu -selected-row 2)" in
+    $english)
+        setxkbmap -layout us -variant altgr-intl
+        ;;
+    $spanish)
+        setxkbmap -layout latam
+        ;;
+    $hungarian)
+        setxkbmap -layout hu 
+        ;;
+esac

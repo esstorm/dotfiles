@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+rofi -show window \
+     -no-show-icons \
+     -theme ~/.config/rofi/windowmenu.rasi
