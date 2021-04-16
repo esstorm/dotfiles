@@ -16,4 +16,5 @@
 ;; (package! org-plot :recipe (:local-repo "lisp" :no-byte-compile t))
 ;; (package! robot-mode)
 (package! key-chord)
+(package! docker-tramp)
 ;; (package! walkman :recipe (:host github :repo "abrochard/walkman"))

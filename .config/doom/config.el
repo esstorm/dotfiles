@@ -38,6 +38,12 @@
 
 ;; Set case insensitive search by default
 (setq case-fold-search t)
+
+;;Exit insert mode by pressing j and then j quickly
+(setq key-chord-two-keys-delay 0.5)
+(key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+(key-chord-mode 1)
+
 ;;
 ;;; UI
 

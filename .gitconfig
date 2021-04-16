@@ -1,0 +1,49 @@
+[includeIf "gitdir:~/.config/"]
+  path = ~/.gitconfig-personal
+
+[includeIf "gitdir:~/.dotfiles/"]
+  path = ~/.gitconfig-personal
+
+[includeIf "gitdir:~/Code/"]
+  path = ~/.gitconfig-personal
+
+[includeIf "gitdir:/repo/"]
+  path = ~/.gitconfig-work
+
+[core]
+   pager = less -r
+   editor = vim
+
+[merge]
+   tool = meld
+
+[mergetool "meld"]
+   cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+
+[mergetool]
+   prompt = false
+   keepBackup = false
+
+[diff]
+   tool = meld
+
+[credential]
+   helper = cache
+
+[filter "lfs"]
+   clean = git-lfs clean -- %f
+   smudge = git-lfs smudge -- %f
+   required = true
+
+[alias]
+   plog = log --pretty=format:'%Cred%h%Creset %s -%C(yellow)%d%Creset %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+   lol = log --graph --decorate --pretty=oneline --abbrev-commit
+   st = status
+   ci = commit
+   co = checkout
+   br = branch
+   di = difftool
+   subupd = submodule update --recursive --init
+
+[status]
+   showUntrackedFiles = no

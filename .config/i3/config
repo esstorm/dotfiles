@@ -279,7 +279,7 @@ assign [class="pidgin"] $ws0
 for_window [class="pidgin"] move to workspace $ws0
 
 # windows starting in floating mode
-for_window [class="^.*"] border pixel 0
+for_window [class="^.*"] border pixel 1
 for_window [class="^Floatme$"] floating enable
 for_window [instance="origin.exe"] floating enable
 for_window [title="File Transfer*"] floating enable

@@ -19,7 +19,7 @@ CASE_SENSITIVE="true"
 plugins=(git globalias)
 
 # Add commands here to skip globalias expansion
-declare -a GLOBALIAS_BLKLIST=(git ls config grep)
+declare -a GLOBALIAS_BLKLIST=(git ls config grep history)
 #plugins=(git)
 
 source $ZSH/oh-my-zsh.sh

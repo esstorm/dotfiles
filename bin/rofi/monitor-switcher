@@ -16,7 +16,7 @@ case "$(echo -e "$options" | $rofi_command -dmenu -selected-row 3)" in
         echo "pc_screen_only"
         xrandr \
             --output eDP-1 --auto \
-            --output DP-1 --off \
+            --output DP-1-2-1 --off \
             && ~/.config/polybar/launch.sh
         ;;
     $duplicate_screen)
@@ -27,13 +27,13 @@ case "$(echo -e "$options" | $rofi_command -dmenu -selected-row 3)" in
         echo "extend_screen"
         xrandr \
             --output eDP-1 --auto \
-            --output DP-1 --primary --auto --right-of eDP-1 \
+            --output DP-1-2-1 --primary --auto --right-of eDP-1 \
             && ~/.config/polybar/launch.sh
         ;;
     $second_screen_only)
         xrandr \
             --output eDP-1 --off \
-            --output DP-1 --primary --auto \
+            --output DP-1-2-1 --primary --auto \
             && ~/.config/polybar/launch.sh
         ;;
 esac
